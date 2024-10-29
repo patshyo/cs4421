@@ -6,6 +6,7 @@
 import java.util.*;
 public class template 
 {
+    // Vendor Converter changes the Vendor ID into the name - example: 0x8086 is Intel
     public static String vedorIdConverter(String vendorId){
         String[] vendorNames = {"intel","AMD","Ralink","Realtek Semiconductor", "02 micro", "Nvidia", "Emulex", "Fujitsu",
         };
@@ -18,6 +19,8 @@ public class template
         return vendorId;
 
     }
+
+    //PCI Information - Shows Information about the PCI devices on your machine
     public static void showPCI() {
         pciInfo pci = new pciInfo();
         pci.read();
@@ -63,12 +66,15 @@ public class template
                 }
             }
         }
+        //Prints out what percentage of the devices in use are intel
         System.out.printf("this device is %d percent intel, intelCount = %d, venderCount" +
                 " = %d", (intelCount * 100 / vendorCount), intelCount, vendorCount);
         for(int i = 0;i < pciDevices.size(); i++){
             System.out.print("\n" + pciDevices.get(i));
         }
     }
+
+    //ShowUSB is used to get information about any USB buses that may be being used by the computer
     public static void showUSB()
     {
         usbInfo usb = new usbInfo();
@@ -97,6 +103,7 @@ public class template
         }
     }
 
+    //ShowCPU contains all the information about the CPU and the sizes of the L1,L2 and L3 Cache
     public static void showCPU()
     {
         cpuInfo cpu = new cpuInfo();
@@ -118,10 +125,14 @@ public class template
         cpu.read(1);
         System.out.println("core 1 idle="+cpu.getIdleTime(1)+"%");
     }
+
+    // ShowSys prints out what the method does
     public static void showSys(){
         sysInfo system = new sysInfo();
         System.out.println("the method intExample(1) does " +system.intExample(1) );
     }
+
+    //ShowDisk contains the total disk storage and how much is being used
     public static void showDisk()
     {
         diskInfo disk = new diskInfo();
@@ -136,18 +147,14 @@ public class template
 
             System.out.println("disk unused = " + (disk.getTotal(i) - disk.getUsed(i)));
             //assigns double to percentageUsed and then divides Used disk by total disk and multiplies by 100
-
-
             double percentageUsed = ((double) disk.getUsed(i) / disk.getTotal(i)) * 100;
-
 //prints out the percentage of disk used and prints out percent sign as well(%)
-
-
             System.out.println("percentage of disk used = " + percentageUsed + "%");
 
 
         }
     }
+
     public static void testShowDisk()
     {
         diskInfo disk = new diskInfo();
@@ -181,6 +188,7 @@ public class template
 
     }
 
+//ShowMem converts MB to GB and prints how much memory is used
     public static void showMem()
     {
         memInfo mem = new memInfo();
@@ -200,8 +208,8 @@ public class template
         //Displays the Percentage of used memory
         double memorypercentageUsed = ((double)mem.getUsed()/ mem.getTotal()) * 100;
         System.out.println("percentage of memory used =" + memorypercentageUsed + "%");
-//displays percentage of unused memory
-//makes memorypercentageUsed100 as what is unused memory percentage by taking it away from 100.
+        //displays percentage of unused memory
+        //makes memorypercentageUsed100 as what is unused memory percentage by taking it away from 100.
         double memorypercentageUsed100 = 100 - memorypercentageUsed;
         System.out.println("percentage of unused memory =" + memorypercentageUsed100 + "%" );
     }
@@ -219,7 +227,6 @@ public class template
         showDisk();
         //showMem();
         //showSys();
-//Aoibheann is here
         //e
     }
 }
