@@ -148,10 +148,25 @@ public class template
             ", l2="+cpu.l2CacheSize()+
             ", l3="+cpu.l3CacheSize());
 
+        double totall1cache = cpu.l1dCacheSize() + cpu.l1iCacheSize();
+        if ((totall1cache > cpu.l2CacheSize()) && totall1cache > cpu.l3CacheSize()){
+            System.out.println("L1 has the largest Cache Size");
+        } else if (totall1cache < cpu.l2CacheSize() && cpu.l2CacheSize() > cpu.l3CacheSize()){
+            System.out.println("L2 has the largest Cache size");
+        } else if (totall1cache < cpu.l3CacheSize() && cpu.l2CacheSize() < cpu.l3CacheSize()) {
+            System.out.println("L3 has the largest Cache Size");
+        } else {
+            System.out.println("The cache sizes are all the same");
+        }
+
+
+
+
         // Sleep for 1 second and display the idle time percentage for
         // core 1.  This assumes 10Hz so in one second we have 100
         cpu.read(1);
         System.out.println("core 1 idle="+cpu.getIdleTime(1)+"%");
+
     }
     public static void showSys(){
         sysInfo system = new sysInfo();
@@ -239,6 +254,8 @@ public class template
 //makes memorypercentageUsed100 as what is unused memory percentage by taking it away from 100.
         double memorypercentageUsed100 = 100 - memorypercentageUsed;
         System.out.println("percentage of unused memory =" + memorypercentageUsed100 + "%" );
+
+
     }
 
 
@@ -259,8 +276,7 @@ public class template
         //showDisk();
         //showMem();
         //showSys();
-//Aoibheann is here
-        //e
+
     }
 }
 
