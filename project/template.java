@@ -6,7 +6,6 @@
 import java.util.*;
 public class template 
 {
-    // Vendor Converter changes the Vendor ID into the name - example: 0x8086 is Intel
     public static String vedorIdConverter(String vendorId){
         String[] vendorNames = {"intel","AMD","Ralink","Realtek Semiconductor", "02 micro", "Nvidia", "Emulex",
                 "Fujitsu", "VMware", "Oracle Corporation", "Apple"
@@ -36,16 +35,22 @@ public class template
         return productId;
 
     }
-
-    //PCI Information - Shows Information about the PCI devices on your machine
     public static void showPCI() {
         pciInfo pci = new pciInfo();
         pci.read();
         String intel = "0x8086";
-        String vendor;
+        String vendorId;
+        String vendorName;
+        String productId;
+        String productName;
         int intelCount = 0;
         int vendorCount = 0;
-        ArrayList<String> pciDevices = new ArrayList<>();
+        ArrayList<String> vendorIdList = new ArrayList<>();
+        ArrayList<String> vendorNameList = new ArrayList<>();
+        ArrayList<String> productIdList = new ArrayList<>();
+        ArrayList<String> productNameList = new ArrayList<>();
+
+
         int pciCount = 0;
 
         System.out.println("\nThis machine has " +
@@ -68,30 +73,37 @@ public class template
                         if (pci.functionPresent(i, j, k) > 0) {
                             System.out.println("Bus " + i + " device " + j + " function " + k +
                                     " has vendor " + vedorIdConverter(String.format("0x%04X", pci.vendorID(i, j, k))) +
-                                    " and product " + String.format("0x%04X", pci.productID(i, j, k)));
-                            vendor = String.format("0x%04X", pci.vendorID(i, j, k));
-                            if (intel.compareTo(vendor) == 0) {
+                                    " and product " + productIdConverter(String.format("0x%04X", pci.productID(i, j, k))));
+                            vendorId = String.format("0x%04X", pci.vendorID(i, j, k));
+                            vendorIdList.add(vendorId);
+                            vendorName = vedorIdConverter(vendorId);
+                            vendorNameList.add(vendorName);
+                            productId = String.format("0x%04X", pci.productID(i, j, k));
+                            productIdList.add(productId);
+                            productName = productIdConverter(productId);
+                            productNameList.add(productName);
+
+
+
+                            if (intel.compareTo(vendorId) == 0) {
                                 intelCount++;
                                 vendorCount++;
                             } else {
                                 vendorCount++;
                             }
                             pciCount++;
-                            pciDevices.add(vendor);
+
                         }
                     }
                 }
             }
         }
-        //Prints out what percentage of the devices in use are intel
         System.out.printf("this device is %d percent intel, intelCount = %d, venderCount" +
                 " = %d", (intelCount * 100 / vendorCount), intelCount, vendorCount);
-        for(int i = 0;i < pciDevices.size(); i++){
-            System.out.print("\n" + pciDevices.get(i));
+        for(int i = 0;i < vendorIdList.size(); i++){
+            System.out.print("\n" + vendorIdList.get(i));
         }
     }
-
-    //ShowUSB is used to get information about any USB buses that may be being used by the computer
     public static void showUSB()
     {
         usbInfo usb = new usbInfo();
@@ -120,7 +132,6 @@ public class template
         }
     }
 
-    //ShowCPU contains all the information about the CPU and the sizes of the L1,L2 and L3 Cache
     public static void showCPU()
     {
         cpuInfo cpu = new cpuInfo();
@@ -142,14 +153,10 @@ public class template
         cpu.read(1);
         System.out.println("core 1 idle="+cpu.getIdleTime(1)+"%");
     }
-
-    // ShowSys prints out what the method does
     public static void showSys(){
         sysInfo system = new sysInfo();
         System.out.println("the method intExample(1) does " +system.intExample(1) );
     }
-
-    //ShowDisk contains the total disk storage and how much is being used
     public static void showDisk()
     {
         diskInfo disk = new diskInfo();
@@ -164,14 +171,18 @@ public class template
 
             System.out.println("disk unused = " + (disk.getTotal(i) - disk.getUsed(i)));
             //assigns double to percentageUsed and then divides Used disk by total disk and multiplies by 100
+
+
             double percentageUsed = ((double) disk.getUsed(i) / disk.getTotal(i)) * 100;
+
 //prints out the percentage of disk used and prints out percent sign as well(%)
+
+
             System.out.println("percentage of disk used = " + percentageUsed + "%");
 
 
         }
     }
-
     public static void testShowDisk()
     {
         diskInfo disk = new diskInfo();
@@ -205,7 +216,6 @@ public class template
 
     }
 
-//ShowMem converts MB to GB and prints how much memory is used
     public static void showMem()
     {
         memInfo mem = new memInfo();
@@ -225,8 +235,8 @@ public class template
         //Displays the Percentage of used memory
         double memorypercentageUsed = ((double)mem.getUsed()/ mem.getTotal()) * 100;
         System.out.println("percentage of memory used =" + memorypercentageUsed + "%");
-        //displays percentage of unused memory
-        //makes memorypercentageUsed100 as what is unused memory percentage by taking it away from 100.
+//displays percentage of unused memory
+//makes memorypercentageUsed100 as what is unused memory percentage by taking it away from 100.
         double memorypercentageUsed100 = 100 - memorypercentageUsed;
         System.out.println("percentage of unused memory =" + memorypercentageUsed100 + "%" );
     }
@@ -244,11 +254,12 @@ public class template
         cpu.read(0);
 
         //showCPU();
-        //showPCI();
+        showPCI();
         //showUSB();
-        showDisk();
+        //showDisk();
         //showMem();
         //showSys();
+//Aoibheann is here
         //e
     }
 }
