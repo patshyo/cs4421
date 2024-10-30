@@ -8,15 +8,32 @@ public class template
 {
     // Vendor Converter changes the Vendor ID into the name - example: 0x8086 is Intel
     public static String vedorIdConverter(String vendorId){
-        String[] vendorNames = {"intel","AMD","Ralink","Realtek Semiconductor", "02 micro", "Nvidia", "Emulex", "Fujitsu",
+        String[] vendorNames = {"intel","AMD","Ralink","Realtek Semiconductor", "02 micro", "Nvidia", "Emulex",
+                "Fujitsu", "VMware", "Oracle Corporation", "Apple"
         };
-        String[] vendorIdList = {"0x8086","0x1022","0x1814", "0x10ec", "0x1217","0x10de", "0x19a2", "0x1734" };
+        String[] vendorIdList = {"0x8086","0x1022","0x1814", "0x10ec", "0x1217","0x10de", "0x19a2", "0x1734", "0x15AD", "0x80EE", "0x106B" };
         for(int i = 0;i < vendorIdList.length;i++){
             if(vendorId.compareTo(vendorIdList[i]) == 0){
                 vendorId = vendorNames[i];
             }
         }
         return vendorId;
+
+    }
+    // Product Converter changes the Product ID into the name - example: 0x8086 is Intel
+    public static String productIdConverter(String productId){
+        String[] productNames = {"Intel 440FX", "Intel 82371SB PIIX3 ISA", "Intel 82371AB/EB/MB PIIX4 IDE Controller",
+                "VMware Virtual SVGA II Adapter.", "Intel 82540EM Gigabit Ethernet Controller", "VirtualBox Guest Additions Device",
+                " Intel 82801AA AC'97 Audio Controller", "Apple iSight Camera", "Intel 82371AB/EB/MB PIIX4 ACPI.",
+                "Intel 82576 Gigabit Ethernet Controller.", "Intel 82579LM Gigabit Network Connection."
+        };
+        String[] productIdList = {"0x1237", "0x7000", "0x7111", "0x0405 ", "0x0405", "0x100E", "0xCAFE", "0x2415", "0x003F", "0x7113", "0x265C", "0x2829"};
+        for(int i = 0;i < productIdList.length;i++){
+            if(productId.compareTo(productIdList[i]) == 0){
+                productId = productNames[i];
+            }
+        }
+        return productId;
 
     }
 
@@ -213,6 +230,11 @@ public class template
         double memorypercentageUsed100 = 100 - memorypercentageUsed;
         System.out.println("percentage of unused memory =" + memorypercentageUsed100 + "%" );
     }
+
+
+
+
+
 
     public static void main(String[] args)
     {
